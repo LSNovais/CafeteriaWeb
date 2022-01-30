@@ -1,0 +1,102 @@
+.popUpConfirmacao{
+    position: fixed;
+    height: 30%;
+    width: 30%;
+    top: 35%;
+    left: 35%;
+    background-color: white;
+    border-style: solid;
+    border-color: black;
+    border-radius: 20px;
+    z-index: 20;
+    visibility: hidden;
+}
+
+.txPopUpConfirmacao{
+    position: relative;
+    top: 30%;
+    left: 10%;
+    width: 80%;
+    font-size: 100%;
+    color: black;
+    text-align: center;
+}
+
+.btPopUpConfirmacaoOk{
+    position: relative;
+    top: 60%;
+    left: 55%;
+    width: 30%;
+    height: 12%;
+    cursor: pointer;
+    text-align: center;
+    border-style: solid;
+    background-color: rgba(29, 255, 59, 0.658);
+    border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
+    z-index: 21;
+}
+
+.btPopUpConfirmacaoCancelar{
+    position: relative;
+    top: 46%;
+    left: 18%;
+    width: 30%;
+    height: 12%;
+    cursor: pointer;
+    text-align: center;
+    border-style: solid;
+    background-color: rgba(255, 29, 29, 0.658);
+    border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
+    z-index: 21;
+}
+
+
+
+
+.popUpInformacao{
+    position: fixed;
+    top: 72%;
+    left: 82%;
+    height: 110px;
+    width: 18%;
+    font-size: 110%;
+    font-style: normal;
+    border-style: solid;
+    border-width: 1.5px;
+    border-radius: 15px;
+    border-color: black;
+    background-color: rgba(255, 255, 255, 0.945);
+    margin-top: 1%;
+    box-shadow: 1px 1px rgba(0, 0, 0, 0.466);
+    visibility: hidden;
+    opacity: 0%;
+    transition: all linear 0.1s;
+    z-index: 10;
+}
+
+.btPopUpFechar{
+    position: relative;
+    top: 3%;
+    left: 85%;
+    width: 13%;
+    height: 20%;
+    border-style: solid;
+    border-width: 1px;
+    border-color: transparent;
+    border-left-color: black;
+    border-bottom-color: black;
+    border-bottom-left-radius: 20%;
+    cursor: pointer;
+}
+
+.txPopUpInformacao{
+    position: relative;
+    border-color: transparent;
+    background-color: transparent;
+    text-align: center;
+    width: 90%;
+    left: 5%;
+    top: 20%;
+}

@@ -1,0 +1,145 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-animate.js"></script>
+    <script type="text/javascript" src="../JavaScript/Login/JS-LoginCadastro.js"></script>
+    <link rel="stylesheet" href="../css/Paginas/Inicial/PaginaPrincipal.css" Type="text/css">
+    <link rel="stylesheet" href="../css/PopUp/PopUpConfirmação.css" Type="text/css">
+
+
+    <title>Cafeteria</title>
+
+    <script>
+        var app = angular.module('Cafeteria',[]);
+        
+        app.controller('meuCtrlInicial', function($scope, $http) {
+
+            if(sessionStorage.getItem('nome') === null){
+                window.location.href = "./Inicio.html";
+            }
+
+            $scope.NGM_tbUsuarioConectado = "Bom dia, "+sessionStorage.getItem('nome').toString().replace("\"","").replace("\"","!");
+
+
+            //Click
+            $scope.NGC_btOpcaoUmTela = function(){
+                window.location.href = "./TabelaNutricionalConsulta.html";
+            }
+
+            
+            $scope.NGC_btOpcaoCincoTela = function(){
+                window.location.href = "./EstoqueCadastro.html";
+            }
+
+            $scope.NGC_btDeslogar = function(){
+                window.sessionStorage.setItem('nome', null);
+                window.sessionStorage.setItem('sobrenome', null);
+                window.sessionStorage.setItem('codPerfil', null);
+                window.sessionStorage.setItem('id', null);
+                window.location.href = "./Inicio.html";
+            }
+
+            //MouseLeaver
+            $scope.NGMLeave_btOpcaoUmTela = function(){
+                document.getElementById('btSetaUm').style.visibility = "hidden";
+                document.getElementById('txSetaUm').style.visibility = "hidden";
+                document.getElementById('btSetaDois').style.visibility = "hidden";
+                document.getElementById('txSetaDois').style.visibility = "hidden";
+                document.getElementById('btSetaDoisUm').style.visibility = "hidden";
+                document.getElementById('txSetaDoisUm').style.visibility = "hidden";
+            }
+            $scope.NGMLeave_btOpcaoDoisTela = function(){
+                document.getElementById('btSetaTres').style.visibility = "hidden";
+                document.getElementById('txSetaTres').style.visibility = "hidden";
+                document.getElementById('btSetaQuatro').style.visibility = "hidden";
+                document.getElementById('txSetaQuatro').style.visibility = "hidden";
+            }
+            $scope.NGMLeave_btOpcaoTresTela = function(){
+                document.getElementById('btSetaCinco').style.visibility = "hidden";
+                document.getElementById('txSetaCinco').style.visibility = "hidden";
+                document.getElementById('btSetaSeis').style.visibility = "hidden";
+                document.getElementById('txSetaSeis').style.visibility = "hidden";
+            }
+            $scope.NGMLeave_btOpcaoQuatroTela = function(){
+                document.getElementById('btSetaSete').style.visibility = "hidden";
+                document.getElementById('txSetaSete').style.visibility = "hidden";
+                document.getElementById('btSetaOito').style.visibility = "hidden";
+                document.getElementById('txSetaOito').style.visibility = "hidden";
+            }
+
+            //MouseOver
+            $scope.NGMOver_btOpcaoUmTela = function(){
+                document.getElementById('btSetaUm').style.visibility = "visible";
+                document.getElementById('txSetaUm').style.visibility = "visible";
+                document.getElementById('btSetaDois').style.visibility = "visible";
+                document.getElementById('txSetaDois').style.visibility = "visible";
+                document.getElementById('btSetaDoisUm').style.visibility = "visible";
+                document.getElementById('txSetaDoisUm').style.visibility = "visible";
+            }
+            $scope.NGMOver_btOpcaoDoisTela = function(){
+                document.getElementById('btSetaTres').style.visibility = "visible";
+                document.getElementById('txSetaTres').style.visibility = "visible";
+                document.getElementById('btSetaQuatro').style.visibility = "visible";
+                document.getElementById('txSetaQuatro').style.visibility = "visible";
+            }
+            $scope.NGMOver_btOpcaoTresTela = function(){
+                document.getElementById('btSetaCinco').style.visibility = "visible";
+                document.getElementById('txSetaCinco').style.visibility = "visible";
+                document.getElementById('btSetaSeis').style.visibility = "visible";
+                document.getElementById('txSetaSeis').style.visibility = "visible";
+            }
+            $scope.NGMOver_btOpcaoQuatroTela = function(){
+                document.getElementById('btSetaSete').style.visibility = "visible";
+                document.getElementById('txSetaSete').style.visibility = "visible";
+                document.getElementById('btSetaOito').style.visibility = "visible";
+                document.getElementById('txSetaOito').style.visibility = "visible";
+            }
+
+        });
+    </script>
+
+</head>
+<body data-ng-app="Cafeteria" data-ng-controller="meuCtrlInicial" class="body">
+
+
+    <div class="popUpConfirmacao" id="popUpConfirmacao">
+        <p class="txPopUpConfirmacao" id="txPopUpConfirmacao">Você tem certeza que gostaria de salvar?</p>
+        <div class="btPopUpConfirmacaoOk" id="btPopUpConfirmacaoOk" data-ng-click="NGCbtPopUpConfirmacaoOk()">Confirmar</div>
+        <div class="btPopUpConfirmacaoCancelar" id="btPopUpConfirmacaoCancelar" data-ng-click="NGCbtPopUpConfirmacaoCancelar()">Cancelar</div>
+    </div>
+
+
+
+
+    <div class="divInicial" id="divInicial">
+
+        <div class="btDeslogar" id="btDeslogar" data-ng-click="NGC_btDeslogar()">Deslogar</div>
+
+        <p class="txCafeteria" id="txCafeteria">Cafeteria</p>
+        <input type="text" disabled="true" class="tbUsuarioConectado" id="tbUsuarioConectado" data-ng-model="NGM_tbUsuarioConectado" value="Usuário Logado Não Localizado">
+        <p class="txPorOndeComecaremos" id="txPorOndeComecaremos" data-ng-model="NGM_txPorOndeComecaremos">Por onde começaremos hoje?</p>
+        <p class="btOpcaoUmTela" id="btOpcaoUmTela" data-ng-mouseleave="NGMLeave_btOpcaoUmTela()" data-ng-mouseover="NGMOver_btOpcaoUmTela()">Tabela Nutricional</p>
+        <p class="btOpcaoDoisTela" id="btOpcaoDoisTela" data-ng-mouseleave="NGMLeave_btOpcaoDoisTela()" data-ng-mouseover="NGMOver_btOpcaoDoisTela()">Lucros</p>
+        <p class="btOpcaoTresTela" id="btOpcaoTresTela" data-ng-mouseleave="NGMLeave_btOpcaoTresTela()" data-ng-mouseover="NGMOver_btOpcaoTresTela()">Estoque</p>
+        <p class="btOpcaoQuatroTela" id="btOpcaoQuatroTela" data-ng-mouseleave="NGMLeave_btOpcaoQuatroTela()" data-ng-mouseover="NGMOver_btOpcaoQuatroTela()">Receitas</p>
+    
+        <div class="btSetaUm" id="btSetaUm" data-ng-mouseleave="NGMLeave_btOpcaoUmTela()" data-ng-mouseover="NGMOver_btOpcaoUmTela()"></div><div class="txSetaUm" id="txSetaUm" data-ng-click="NGC_btOpcaoUmTela()" data-ng-mouseleave="NGMLeave_btOpcaoUmTela()" data-ng-mouseover="NGMOver_btOpcaoUmTela()">Consulta</div>
+        <div class="btSetaDois" id="btSetaDois" data-ng-mouseleave="NGMLeave_btOpcaoUmTela()" data-ng-mouseover="NGMOver_btOpcaoUmTela()"></div><div class="txSetaDois" id="txSetaDois" data-ng-mouseleave="NGMLeave_btOpcaoUmTela()" data-ng-mouseover="NGMOver_btOpcaoUmTela()">Data de validade</div>
+        <div class="btSetaDoisUm" id="btSetaDoisUm" data-ng-mouseleave="NGMLeave_btOpcaoUmTela()" data-ng-mouseover="NGMOver_btOpcaoUmTela()"></div><div class="txSetaDoisUm" id="txSetaDoisUm" data-ng-mouseleave="NGMLeave_btOpcaoUmTela()" data-ng-mouseover="NGMOver_btOpcaoUmTela()">Imprimir</div>
+
+
+        <div class="btSetaTres" id="btSetaTres" data-ng-mouseleave="NGMLeave_btOpcaoDoisTela()" data-ng-mouseover="NGMOver_btOpcaoDoisTela()"></div><div class="txSetaTres" id="txSetaTres" data-ng-mouseleave="NGMLeave_btOpcaoDoisTela()" data-ng-mouseover="NGMOver_btOpcaoDoisTela()">Calcular</div>
+        <div class="btSetaQuatro" id="btSetaQuatro" data-ng-mouseleave="NGMLeave_btOpcaoDoisTela()" data-ng-mouseover="NGMOver_btOpcaoDoisTela()"></div><div class="txSetaQuatro" id="txSetaQuatro" data-ng-mouseleave="NGMLeave_btOpcaoDoisTela()" data-ng-mouseover="NGMOver_btOpcaoDoisTela()">Opção 2</div>
+
+        <div class="btSetaCinco" id="btSetaCinco" data-ng-mouseleave="NGMLeave_btOpcaoTresTela()" data-ng-mouseover="NGMOver_btOpcaoTresTela()"></div><div class="txSetaCinco" id="txSetaCinco" data-ng-click="NGC_btOpcaoCincoTela()" data-ng-mouseleave="NGMLeave_btOpcaoTresTela()" data-ng-mouseover="NGMOver_btOpcaoTresTela()">Cadastro</div>
+        <div class="btSetaSeis" id="btSetaSeis" data-ng-mouseleave="NGMLeave_btOpcaoTresTela()" data-ng-mouseover="NGMOver_btOpcaoTresTela()"></div><div class="txSetaSeis" id="txSetaSeis" data-ng-mouseleave="NGMLeave_btOpcaoTresTela()" data-ng-mouseover="NGMOver_btOpcaoTresTela()">Opção 2</div>
+
+        <div class="btSetaSete" id="btSetaSete" data-ng-mouseleave="NGMLeave_btOpcaoQuatroTela()" data-ng-mouseover="NGMOver_btOpcaoQuatroTela()"></div><div class="txSetaSete" id="txSetaSete" data-ng-mouseleave="NGMLeave_btOpcaoQuatroTela()" data-ng-mouseover="NGMOver_btOpcaoQuatroTela()">Consultar</div>
+        <div class="btSetaOito" id="btSetaOito" data-ng-mouseleave="NGMLeave_btOpcaoQuatroTela()" data-ng-mouseover="NGMOver_btOpcaoQuatroTela()"></div><div class="txSetaOito" id="txSetaOito" data-ng-mouseleave="NGMLeave_btOpcaoQuatroTela()" data-ng-mouseover="NGMOver_btOpcaoQuatroTela()">Calcular</div>
+
+    </div>
+</body>
+</html>

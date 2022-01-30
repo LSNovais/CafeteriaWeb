@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-animate.js"></script>
+    <script type="text/javascript" src="../JavaScript/Login/JS-LoginCadastro.js"></script>
+    <link rel="stylesheet" href="../css/Paginas/TabelaNutricional/Consulta.css" Type="text/css">
+    <link rel="stylesheet" href="../css/Menu/MenuSuperior.css" Type="text/css">
+    <link rel="stylesheet" href="../css/PopUp/PopUpConfirmação.css" Type="text/css">
+
+
+    <title>Tabela Nutricional</title>
+
+    <script>
+        var app = angular.module('Padaria',[]);
+        
+        app.controller('meuCtrlInicial', function($scope, $http) {
+            if(sessionStorage.getItem('nome') === null){
+                window.location.href = "./Inicio.html";
+            }
+            
+            $scope.opcao = 0;
+            $scope.NGM_txUsuarioConectado = "Bom dia, "+sessionStorage.getItem('nome').toString().replace("\"","").replace("\"","!");
+
+
+
+            //Botão para abaixar ou subir o Menu Superior
+            $scope.NGCbtAbrirMenuSuperior = function(){
+                if(document.getElementById('divMenuSuperior').style.top == "-3%"){
+                    document.getElementById('divMenuSuperior').style.top = "-11%";
+                }else{
+                    document.getElementById('divMenuSuperior').style.top = "-3%";
+                }
+            }
+
+
+            //Função para cadastrar um novo produto no banco de dados pelo Codigo de Barras
+            $scope.NGCbtSalvarProduto = function(){
+                
+                document.getElementById('popUpConfirmacao').style.visibility = "visible";
+                $scope.opcao = 1;
+            }
+
+            $scope.NGCbtPopUpConfirmacaoOk = function(){
+                
+
+                if($scope.opcao == 1){
+
+                    var req = {
+                        method: 'POST',
+                        url: 'http://localhost:8080/cafeteria/tabelanutricional/salvar/produto',
+                        headers: {
+                        'Content-Type': 'application/json'
+                        },
+                        data: { codBarras: $scope.NGM_tbCodBarras,
+                                valorEnergetico: $scope.NGM_tbValorEnergetico,
+                                carboidratos: $scope.NGM_tbCarboidratos,
+                                proteinas: $scope.NGM_tbProteinas,
+                                gordurasTotais: $scope.NGM_tbGordurasTotais,
+                                gordurasSaturadas: $scope.NGM_tbGordurasSaturadas,
+                                gordurasTrans: $scope.NGM_tbGordurasTrans,
+                                fibraAlimentar: $scope.NGM_tbFibraAlimentar,
+                                sodio: $scope.NGM_tbSodio,
+                                dataValidade: "2022-01-24T20:14:01.719+00:00",
+                                dataFabricacao: "2022-01-24T20:14:01.719+00:00",
+                                comentarios: $scope.NGM_tbComentarios,
+                                vdValorEnergetico: $scope.NGM_tbVDValorEnergetico,
+                                vdCarboidratos: $scope.NGM_tbVDCarboidratos,
+                                vdProteinas: $scope.NGM_tbVDProteinas,
+                                vdGordurasTotais: $scope.NGM_tbVDGordurasTotais,
+                                vdGordurasSaturadas: $scope.NGM_tbVDGordurasSaturadas,
+                                vdGordurasTrans: $scope.NGM_tbVDGordurasTrans,
+                                vdFibraAlimentar: $scope.NGM_tbVDFibraAlimentar,
+                                vdSodio: $scope.NGM_tbVDSodio
+                            }
+                    }
+
+                    $http(req).then(function(){
+                    });
+
+                    document.getElementById('popUpConfirmacao').style.visibility = "hidden";
+                    
+                    $scope.NGM_txPopUpInformacao = "Produto atualizado com sucesso!";
+                    document.getElementById('popUpInformacao').style.visibility = "visible";
+                    document.getElementById('popUpInformacao').style.opacity = "100%";
+                    document.getElementById('popUpInformacao').style.left = "80%";
+                    setTimeout(function(){
+                        document.getElementById('popUpInformacao').style.opacity = "0%";
+                        setTimeout(function(){
+                            document.getElementById('popUpInformacao').style.left = "82%";
+                        },200);
+                    },2000);
+
+                }
+            }    
+
+            $scope.NGCbtPopUpConfirmacaoCancelar = function(){
+                document.getElementById('popUpConfirmacao').style.visibility = "hidden";
+            }
+
+            
+
+            //Consultar um produto no banco de dados pelo Codigo de Barras
+            $scope.NGCbtConsultarCodBarras = function(){
+
+                $scope.urlGet = "http://localhost:8080/cafeteria/tabelanutricional/carregar/produtoestoque/";
+                $scope.codBarras = $scope.NGM_tbCodBarras;
+                
+                $scope.NGM_tbNomeProduto="";
+                $scope.NGM_tbValorEnergetico="";
+                $scope.NGM_tbCarboidratos="";
+                $scope.NGM_tbProteinas="";
+                $scope.NGM_tbGordurasTotais="";
+                $scope.NGM_tbGordurasSaturadas="";
+                $scope.NGM_tbGordurasTrans="";
+                $scope.NGM_tbFibraAlimentar="";
+                $scope.NGM_tbSodio="";
+                $scope.NGM_tbDataValidade="";
+                $scope.NGM_tbDataFabricacao="";
+                $scope.NGM_tbComentarios="";
+
+                $scope.NGM_tbVDValorEnergetico="";
+                $scope.NGM_tbVDCarboidratos="";
+                $scope.NGM_tbVDProteinas="";
+                $scope.NGM_tbVDGordurasTotais="";
+                $scope.NGM_tbVDGordurasSaturadas="";
+                $scope.NGM_tbVDGordurasTrans="";
+                $scope.NGM_tbVDFibraAlimentar="";
+                $scope.NGM_tbVDSodio="";
+                $scope.NGM_tbVDComentarios="";
+
+
+                
+                $http.get($scope.urlGet+$scope.codBarras).then(function (response) {
+                    $scope.myData = response.data;
+
+                    if(!($scope.myData.status == 400)){
+                        $scope.NGM_tbNomeProduto=         $scope.myData.nomeProduto.toString();
+                        $scope.NGM_tbValorEnergetico=     $scope.myData.valorEnergetico.toString();
+                        $scope.NGM_tbCarboidratos=        $scope.myData.carboidratos.toString();
+                        $scope.NGM_tbProteinas=           $scope.myData.proteinas.toString();
+                        $scope.NGM_tbGordurasTotais=      $scope.myData.gordurasTotais.toString();
+                        $scope.NGM_tbGordurasSaturadas=   $scope.myData.gordurasSaturadas.toString();
+                        $scope.NGM_tbGordurasTrans=       $scope.myData.gordurasTrans.toString();
+                        $scope.NGM_tbFibraAlimentar=      $scope.myData.fibraAlimentar.toString();
+                        $scope.NGM_tbSodio=               $scope.myData.sodio.toString();
+                        $scope.NGM_tbDataValidade=        $scope.myData.dataValidade.toString();
+                        $scope.NGM_tbDataFabricacao=      $scope.myData.dataFabricacao.toString();
+                        $scope.NGM_tbComentarios=         $scope.myData.comentarios.toString();
+                        $scope.NGM_tbVDValorEnergetico=   $scope.myData.vdValorEnergetico.toString();
+                        $scope.NGM_tbVDCarboidratos=      $scope.myData.vdCarboidratos.toString();
+                        $scope.NGM_tbVDProteinas=         $scope.myData.vdProteinas.toString();
+                        $scope.NGM_tbVDGordurasTotais=    $scope.myData.vdGordurasTotais.toString();
+                        $scope.NGM_tbVDGordurasSaturadas= $scope.myData.vdGordurasSaturadas.toString();
+                        $scope.NGM_tbVDGordurasTrans=     $scope.myData.vdGordurasTrans.toString();
+                        $scope.NGM_tbVDFibraAlimentar=    $scope.myData.vdFibraAlimentar.toString();
+                        $scope.NGM_tbVDSodio=             $scope.myData.vdSodio.toString();
+
+                    }
+
+                    if($scope.myData.nomeProduto === null){
+
+                        document.getElementById('divCinzaCadastro').style.visibility = "hidden";
+                        document.getElementById('divCinzaAtualizacao').style.visibility = "visible";
+
+                        document.getElementById('popUpConfirmacao').style.visibility = "hidden";
+                        $scope.NGM_txPopUpInformacao = "Nenhum produto encontrado!";
+                        document.getElementById('popUpInformacao').style.visibility = "visible";
+                        document.getElementById('popUpInformacao').style.opacity = "100%";
+                        document.getElementById('popUpInformacao').style.left = "80%";
+                        setTimeout(function(){
+                            document.getElementById('popUpInformacao').style.opacity = "0%";
+                            setTimeout(function(){
+                                document.getElementById('popUpInformacao').style.left = "82%";
+                            },200);
+                        },2000);
+
+                    }else{
+                        $scope.NGM_txPopUpInformacao = "Produto encontrado!";
+                        document.getElementById('popUpInformacao').style.visibility = "visible";
+                        document.getElementById('popUpInformacao').style.opacity = "100%";
+                        document.getElementById('popUpInformacao').style.left = "80%";
+                        setTimeout(function(){
+                            document.getElementById('popUpInformacao').style.opacity = "0%";
+                            setTimeout(function(){
+                                document.getElementById('popUpInformacao').style.left = "82%";
+                            },200);
+                        },2000);
+                    }
+
+                });
+
+
+            }
+
+            $scope.NGC_btPopUpFechar = function(){
+                document.getElementById('popUpInformacao').style.opacity = "0%";
+                document.getElementById('popUpInformacao').style.left = "82%";
+            }
+
+            $scope.NGC_btVoltar = function(){
+                window.location.href = "./PaginaPrincipal.html";
+            }
+
+            //Função que limpa todos os campos
+            $scope.NGCbtLimpar = function(){
+
+                $scope.NGM_tbCodBarras="";
+
+                $scope.NGM_tbNomeProduto="";
+                $scope.NGM_tbValorEnergetico="";
+                $scope.NGM_tbCarboidratos="";
+                $scope.NGM_tbProteinas="";
+                $scope.NGM_tbGordurasTotais="";
+                $scope.NGM_tbGordurasSaturadas="";
+                $scope.NGM_tbGordurasTrans="";
+                $scope.NGM_tbFibraAlimentar="";
+                $scope.NGM_tbSodio="";
+                $scope.NGM_tbDataValidade="";
+                $scope.NGM_tbDataFabricacao="";
+                $scope.NGM_tbComentarios="";
+
+                $scope.NGM_tbVDValorEnergetico="";
+                $scope.NGM_tbVDCarboidratos="";
+                $scope.NGM_tbVDProteinas="";
+                $scope.NGM_tbVDGordurasTotais="";
+                $scope.NGM_tbVDGordurasSaturadas="";
+                $scope.NGM_tbVDGordurasTrans="";
+                $scope.NGM_tbVDFibraAlimentar="";
+                $scope.NGM_tbVDSodio="";
+                $scope.NGM_tbVDComentarios="";
+
+            }
+
+
+        });
+    </script>
+
+</head>
+<body data-ng-app="Padaria" data-ng-controller="meuCtrlInicial" class="body">
+
+    <input type="text" disabled="true" class="txUsuarioConectado" id="txUsuarioConectado" data-ng-model="NGM_txUsuarioConectado" value="Usuário Logado Não Localizado">
+
+
+    <div class="popUpConfirmacao" id="popUpConfirmacao">
+        <p class="txPopUpConfirmacao" id="txPopUpConfirmacao">Você tem certeza que gostaria de salvar?</p>
+        <div class="btPopUpConfirmacaoOk" id="btPopUpConfirmacaoOk" data-ng-click="NGCbtPopUpConfirmacaoOk()">Confirmar</div>
+        <div class="btPopUpConfirmacaoCancelar" id="btPopUpConfirmacaoCancelar" data-ng-click="NGCbtPopUpConfirmacaoCancelar()">Cancelar</div>
+    </div>
+
+    <div class="popUpInformacao" id="popUpInformacao">
+        <div class="btPopUpFechar" id="btPopUpFechar" data-ng-click="NGC_btPopUpFechar()">X</div>
+        <input type="text" disabled="true" class="txPopUpInformacao" id="txPopUpInformacao" data-ng-model="NGM_txPopUpInformacao">
+    </div>
+
+    <div class="divMenuSuperior" id="divMenuSuperior">
+        <p class="btOpcaoUm" id="btOpcaoUm">Controle de Estoque</p>
+        <p class="btOpcaoDois" id="btOpcaoDois">Calculo de Lucros</p>
+        <p class="btOpcaoTres" id="btOpcaoTres">Tabela Nutricional</p>
+        <p class="btOpcaoQuatro" id="btOpcaoQuatro">Data de Validade</p>
+        <div class="btMenuSuperior" id="btMenuSuperior"  data-ng-click="NGCbtAbrirMenuSuperior()">
+        </div>
+    </div>
+
+
+
+
+
+
+
+    <div class="divInicial" id="divInicial">
+        
+        <div class="btVoltar" id="btVoltar" data-ng-click="NGC_btVoltar()">Voltar</div>
+
+        <input type="textbox" data-ng-model="NGM_tbCodBarras" class="tbCodBarras" id="tbCodBarras"/>
+        <div class="btConsultaCodBarras" id="btConsultaCodBarras" data-ng-click="NGCbtConsultarCodBarras()">
+            <div class="btConsultaCodBarrasImg1" id="btConsultaCodBarrasImg1"></div>
+            <div class="btConsultaCodBarrasImg2" id="btConsultaCodBarrasImg2"></div>
+        </div>
+
+        <p class="txTabelaNutricional" id="txTabelaNutricional">Tabela Nutricional</p>
+
+        <div class="divDadosNutricionais">
+            <p class="txNomeProduto" id="txNomeProduto">Nome Produto:</p>
+            <input type="textbox" disabled="true" data-ng-model="NGM_tbNomeProduto" class="tbNomeProduto" id="tbNomeProduto"/>
+            <p class="txValorEnergetico" id="txValorEnergetico">Valor Energético:</p>
+            <input type="textbox" data-ng-model="NGM_tbValorEnergetico" class="tbValorEnergetico" id="tbValorEnergetico"/>
+            <p class="txCarboidratos" id="txCarboidratos">Carboidratos:</p>
+            <input type="textbox" data-ng-model="NGM_tbCarboidratos" class="tbCarboidratos" id="tbCarboidratos"/>
+            <p class="txProteinas" id="txProteinas">Proteinas:</p>
+            <input type="textbox" data-ng-model="NGM_tbProteinas" class="tbProteinas" id="tbProteinas"/>
+            <p class="txGordurasTotais" id="txGordurasTotais">Gorduras Totais:</p>
+            <input type="textbox" data-ng-model="NGM_tbGordurasTotais" class="tbGordurasTotais" id="tbGordurasTotais"/>
+            <p class="txGordurasSaturadas" id="txGordurasSaturadas">Gorduras Saturadas:</p>
+            <input type="textbox" data-ng-model="NGM_tbGordurasSaturadas" class="tbGordurasSaturadas" id="tbGordurasSaturadas"/>
+            <p class="txGordurasTrans" id="txGordurasTrans">Gorduras Trans:</p>
+            <input type="textbox" data-ng-model="NGM_tbGordurasTrans" class="tbGordurasTrans" id="tbGordurasTrans"/>
+            <p class="txFibraAlimentar" id="txFibraAlimentar">Fibra Alimentar:</p>
+            <input type="textbox" data-ng-model="NGM_tbFibraAlimentar" class="tbFibraAlimentar" id="tbFibraAlimentar"/>
+            <p class="txSodio" id="txSodio">Sodio:</p>
+            <input type="textbox" data-ng-model="NGM_tbSodio" class="tbSodio" id="tbSodio"/>
+            <p class="txDataValidade" id="txDataValidade">Data Validade:</p>
+            <input type="textbox" data-ng-model="NGM_tbDataValidade" class="tbDataValidade" id="tbDataValidade"/>
+            <p class="txDataFabricacao" id="txDataFabricacao">Data Fabricação:</p>
+            <input type="textbox" data-ng-model="NGM_tbDataFabricacao" class="tbDataFabricacao" id="tbDataFabricacao"/>
+            <p class="txComentarios" id="txComentarios">Comentarios:</p>
+            <input type="textbox" data-ng-model="NGM_tbComentarios" class="tbComentarios" id="tbComentarios"/>
+        </div>
+
+        <p class="txValoresDiarios" id="txValoresDiarios">Valores Diários</p>
+
+        <div class="divVDDadosNutricionais">
+            <p class="txVDValorEnergetico" id="txVDValorEnergetico">Valor Energético:</p>
+            <input type="textbox" data-ng-model="NGM_tbVDValorEnergetico" class="tbVDValorEnergetico" id="tbVDValorEnergetico"/>
+            <p class="txVDCarboidratos" id="txVDCarboidratos">Carboidratos:</p>
+            <input type="textbox" data-ng-model="NGM_tbVDCarboidratos" class="tbVDCarboidratos" id="tbVDCarboidratos"/>
+            <p class="txVDProteinas" id="txVDProteinas">Proteinas:</p>
+            <input type="textbox" data-ng-model="NGM_tbVDProteinas" class="tbVDProteinas" id="tbVDProteinas"/>
+            <p class="txVDGordurasTotais" id="txVDGordurasTotais">Gorduras Totais:</p>
+            <input type="textbox" data-ng-model="NGM_tbVDGordurasTotais" class="tbVDGordurasTotais" id="tbVDGordurasTotais"/>
+            <p class="txVDGordurasSaturadas" id="txVDGordurasSaturadas">Gorduras Saturadas:</p>
+            <input type="textbox" data-ng-model="NGM_tbVDGordurasSaturadas" class="tbVDGordurasSaturadas" id="tbVDGordurasSaturadas"/>
+            <p class="txVDGordurasTrans" id="txVDGordurasTrans">Gorduras Trans:</p>
+            <input type="textbox" data-ng-model="NGM_tbVDGordurasTrans" class="tbVDGordurasTrans" id="tbVDGordurasTrans"/>
+            <p class="txVDFibraAlimentar" id="txVDFibraAlimentar">Fibra Alimentar:</p>
+            <input type="textbox" data-ng-model="NGM_tbVDFibraAlimentar" class="tbVDFibraAlimentar" id="tbVDFibraAlimentar"/>
+            <p class="txVDSodio" id="txVDSodio">Sodio:</p>
+            <input type="textbox" data-ng-model="NGM_tbVDSodio" class="tbVDSodio" id="tbVDSodio"/>
+        </div>
+
+        <div class="divBtsAcao" id="divBtsAcao">
+            <div class="btCancelar" id="btCancelar">Cancelar</div>
+            <div class="btSalvar" id="btSalvar" data-ng-click="NGCbtSalvarProduto()">Salvar</div>
+            <div class="btLimpar" id="btLimpar" data-ng-click="NGCbtLimpar()">Limpar</div>
+        </div>
+    </div>
+</body>
+</html>

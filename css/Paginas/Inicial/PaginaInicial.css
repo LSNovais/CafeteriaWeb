@@ -1,0 +1,126 @@
+.body{
+    background-image: url("../../../img/PlanoFundo.jpg");
+}
+
+.popUpInformacao{
+    position: fixed;
+    top: 72%;
+    left: 82%;
+    height: 110px;
+    width: 18%;
+    font-size: 110%;
+    font-style: normal;
+    border-style: solid;
+    border-width: 1.5px;
+    border-radius: 15px;
+    border-color: black;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.945);
+    margin-top: 1%;
+    box-shadow: 1px 1px rgba(0, 0, 0, 0.466);
+    visibility: hidden;
+    opacity: 0%;
+    transition: all linear 0.1s;
+    z-index: 10;
+}
+
+.btPopUpFechar{
+    position: relative;
+    top: 3%;
+    left: 85%;
+    width: 13%;
+    height: 20%;
+    border-style: solid;
+    border-width: 1px;
+    border-color: transparent;
+    border-left-color: black;
+    border-bottom-color: black;
+    border-bottom-left-radius: 20%;
+    cursor: pointer;
+}
+
+.txPopUpInformacao{
+    position: relative;
+    border-color: transparent;
+    background-color: transparent;
+    text-align: center;
+    width: 90%;
+    left: 5%;
+    top: 20%;
+}
+
+
+
+
+.divDadosNutricionais{
+    position: fixed;
+    top: 20%;
+    left: 32.5%;
+    height: 60%;
+    width: 30%;
+    background-color: rgba(255, 255, 255, 0.945);
+    border-style: solid;
+    border-width: 1.5px;
+    border-color: black;
+    border-radius: 25px;
+}
+
+.txCafeteria{
+    position: fixed;
+    font-size: 200%;
+    font-style: italic;
+    top: 20%;
+    left: 43%;
+}
+.txCafeteria:focus{
+    box-shadow: 0 0 0 0;
+    outline: 0;
+}
+
+
+.tbCpf{
+    position: relative;
+    top: 35%;
+    left: 30%;
+    background-color: transparent;
+    border-style: solid;
+    border-color: transparent;
+    border-bottom-color: black;
+    border-radius: 1px;
+    text-align: center;
+}
+.tbCpf:focus{
+    box-shadow: 0 0 0 0;
+    outline: 0;
+}
+
+.tbSenha{
+    position: relative;
+    top: 55%;
+    left: -18%;
+    background-color: transparent;
+    border-style: solid;
+    border-color: transparent;
+    border-bottom-color: black;
+    border-radius: 1px;
+    text-align: center;
+}
+.tbSenha:focus{
+    box-shadow: 0 0 0 0;
+    outline: 0;
+}
+
+.btEntrar{
+    position: relative;
+    top: 73%;
+    left: 37%;
+    height: 10%;
+    width: 30%;
+    background-color: rgba(255, 255, 255, 0.877);
+    cursor: pointer;
+    text-align: center;
+    font-size: 120%;
+}
+.btEntrar:hover{
+    text-shadow: 0.2px 0.2px black;
+}

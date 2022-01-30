@@ -1,0 +1,102 @@
+.txUsuarioConectado{
+    position: fixed;
+    top: 1%;
+    left: 85%;
+    width: 10%;
+    height: 3%;
+    background-color: white;
+    border-style: solid;
+    border-color: black;
+    border-radius: 15px;
+    font-style: italic;
+    text-align: center;
+}
+
+
+.divMenuSuperior{
+    position: fixed;
+    height: 10%;
+    width: 80%;
+    top: -11%;
+    left: 10%;
+    background-color: rgba(153, 231, 255, 0.938);
+    border-style: solid;
+    border-color: black;
+    border-radius: 20px;
+    border-width: 1.5px;
+    z-index: 10;
+    transition: all linear 0.5s;
+}
+
+
+.btOpcaoUm{
+    position: relative;
+    top: 20%;
+    left: 5%;
+    color: white;
+    font-size: 125%;
+    cursor: pointer;
+}
+.btOpcaoUm:hover{
+    text-shadow: 0.5px 0.5px #00000052;
+}
+
+.btOpcaoDois{
+    position: relative;
+    top: -47%;
+    left: 30%;
+    color: white;
+    font-size: 125%;
+    cursor: pointer;
+}
+.btOpcaoDois:hover{
+    text-shadow: 0.5px 0.5px #00000052;
+}
+
+.btOpcaoTres{
+    position: relative;
+    top: -115%;
+    left: 55%;
+    color: white;
+    font-size: 125%;
+    cursor: pointer;
+}
+.btOpcaoTres:hover{
+    text-shadow: 0.5px 0.5px #00000052;
+}
+
+.btOpcaoQuatro{
+    position: relative;
+    top: -180%;
+    left: 78%;
+    color: white;
+    font-size: 125%;
+    cursor: pointer;
+}
+.btOpcaoQuatro:hover{
+    text-shadow: 0.5px 0.5px #00000052;
+}
+
+
+
+
+
+
+
+
+
+
+.btMenuSuperior{
+    position: relative;
+    height: 50%;
+    width: 2.5%;
+    top: -200%;
+    left: 46.75%;
+    background-color: rgba(119, 205, 255, 0.938);
+    border-style: solid;
+    border-color: black;
+    border-top-color: transparent;
+    border-width: 1.5px;
+    border-bottom-left-radius: 20px;
+    cursor: pointer;
+}

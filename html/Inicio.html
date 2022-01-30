@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-animate.js"></script>
+    <script type="text/javascript" src="../JavaScript/Login/JS-LoginCadastro.js"></script>
+    <link rel="stylesheet" href="../css/Paginas/Inicial/PaginaInicial.css" Type="text/css">
+    <link rel="stylesheet" href="../css/Menu/MenuSuperior.css" Type="text/css">
+    <link rel="stylesheet" href="../css/PopUp/PopUpConfirmação.css" Type="text/css">
+
+
+    <title>Cafeteria</title>
+
+    <script>
+        var app = angular.module('Cafeteria',[]);
+        
+        app.controller('meuCtrlInicial', function($scope, $http) {
+
+
+            $scope.NGM_tbCpf = "Login";
+            $scope.NGM_tbSenha = "********";
+
+            $scope.NGC_btPopUpFechar = function(){
+                document.getElementById('popUpInformacao').style.opacity = "0%";
+                document.getElementById('popUpInformacao').style.left = "82%";
+            }
+
+            $scope.NGF_tbCpf = function(){
+                if($scope.NGM_tbCpf === "Login"){
+                    $scope.NGM_tbCpf = "";
+                }
+            }
+            $scope.NGB_tbCpf = function(){
+                if($scope.NGM_tbCpf === ""){
+                    $scope.NGM_tbCpf = "Login";
+                }
+            }
+
+
+            $scope.NGF_tbSenha = function(){
+                if($scope.NGM_tbSenha === "********"){
+                    $scope.NGM_tbSenha = "";
+                }
+            }
+            $scope.NGB_tbSenha = function(){
+                if($scope.NGM_tbSenha === ""){
+                    $scope.NGM_tbSenha = "********";
+                }
+            }
+
+
+            //Consultar um produto no banco de dados pelo Codigo de Barras
+            $scope.NGC_btEntrar = function(){
+                $scope.urlGet = "http://localhost:8080/cafeteria/inicio/login/";
+                
+                $http.get($scope.urlGet+$scope.NGM_tbCpf+"/"+$scope.NGM_tbSenha).then(function (response) {
+                    $scope.myData = response.data;
+
+
+                    if(!($scope.myData.status == 400) && !($scope.myData.nome === null)){
+                        window.sessionStorage.setItem('nome', JSON.stringify($scope.myData.nome));
+                        window.sessionStorage.setItem('sobrenome', JSON.stringify($scope.myData.sobrenome));
+                        window.sessionStorage.setItem('codPerfil', JSON.stringify($scope.myData.codPerfil));
+                        window.sessionStorage.setItem('id', JSON.stringify($scope.myData.id));
+                        window.location.href = "./PaginaPrincipal.html";
+                    }else{
+                    }
+
+                });
+
+                $scope.NGM_txPopUpInformacao = "Falha ao realizar login!";
+                document.getElementById('popUpInformacao').style.visibility = "visible";
+                document.getElementById('popUpInformacao').style.opacity = "100%";
+                document.getElementById('popUpInformacao').style.left = "80%";
+                setTimeout(function(){
+                    document.getElementById('popUpInformacao').style.opacity = "0%";
+                    setTimeout(function(){
+                        document.getElementById('popUpInformacao').style.left = "82%";
+                    },200);
+                },2000);
+
+
+            }
+
+        });
+    </script>
+
+</head>
+<body data-ng-app="Cafeteria" data-ng-controller="meuCtrlInicial" class="body">
+
+
+    <div class="popUpConfirmacao" id="popUpConfirmacao">
+        <p class="txPopUpConfirmacao" id="txPopUpConfirmacao">Você tem certeza que gostaria de salvar?</p>
+        <div class="btPopUpConfirmacaoOk" id="btPopUpConfirmacaoOk" data-ng-click="NGCbtPopUpConfirmacaoOk()">Confirmar</div>
+        <div class="btPopUpConfirmacaoCancelar" id="btPopUpConfirmacaoCancelar" data-ng-click="NGCbtPopUpConfirmacaoCancelar()">Cancelar</div>
+    </div>
+
+    <div class="popUpInformacao" id="popUpInformacao">
+        <div class="btPopUpFechar" id="btPopUpFechar" data-ng-click="NGC_btPopUpFechar()">X</div>
+        <input type="text" disabled="true" class="txPopUpInformacao" id="txPopUpInformacao" data-ng-model="NGM_txPopUpInformacao">
+    </div>
+
+
+
+
+
+
+    <div class="divInicial" id="divInicial">
+
+        <div class="divDadosNutricionais">
+            <p class="txCafeteria" id="txCafeteria">Cafeteria</p>
+            <input type="textbox" data-ng-model="NGM_tbCpf" data-ng-focus="NGF_tbCpf()" data-ng-blur="NGB_tbCpf()" class="tbCpf" id="tbCpf"/>
+            <input type="password" data-ng-model="NGM_tbSenha" data-ng-focus="NGF_tbSenha()" data-ng-blur="NGB_tbSenha()" class="tbSenha" id="tbSenha"/>
+            <div class="btEntrar" id="btEntrar" data-ng-click="NGC_btEntrar()">Entrar</div>
+        </div>
+
+    </div>
+</body>
+</html>
